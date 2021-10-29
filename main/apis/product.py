@@ -8,6 +8,8 @@ from schema.request_body import PaginationRequest
 from schema.response_body import ResponseBody
 from crud.crud_product import ProductAdd , GetProductById , GetProductByCompanyId , GetProductByCategoryId , DeleteProductById , SearchProductByString
 from datetime import date
+
+
 route = APIRouter(prefix="/product" , tags=['Product'])
 
 
@@ -38,6 +40,7 @@ def productadd(item:Product_Add):
     product = jsonable_encoder(item)
     ProductAdd(product)
     return "Product add successfully"
+
 
 @route.get("/view/{id}", response_model = Product , status_code = 200 )
 def productview(
@@ -85,11 +88,6 @@ def productviewbycompany(
     else:
         product = GetProductByCategoryId(id , False , request['recordsperpage'] ,request['rownumber'] , request['sortby'] , request['sortorder'] )
     return response_body_syntax(product , request)
-    # limit:Optional[int] = None,
-    # skip:Optional[int] = None,
-    # id:str = Path(...,title="ID of the product")):
-    # product = GetProductByCategoryId(id , limit , skip) 
-    # return product
 
 
 @route.delete("delete/{id}" , status_code = 200)
